@@ -11,31 +11,34 @@ if($conn)
 else
 {
 	echo "connection not established";
-}
+}                                                                                        /* till now all was about connection */
 echo "<br>";
-$source = strtolower($_GET["source"]);
-  $destination = strtolower($_GET["destination"]);
-$arr=array();
-$gr=array();
-$c=0;
-for($i=1;$i<=14;$i++)
+
+$source = strtolower($_GET["source"]);                                               
+$destination = strtolower($_GET["destination"]);                                    /* getting source and destination */
+$arr=array();                                                    /* arr contains all the unique station names */                       
+$gr=array();                                                    /* gr is 2d array ----adjacency matrix of graph */   
+
+for($i=1;$i<=14;$i++)                                             
 {
     for($j=1;$j<=14;$j++)
     {
-        $gr[$i][$j]=0;
+        $gr[$i][$j]=0;                                    /* initialising all values to 0 in gr matrix meaning no path */
     }
 }
+
+$c=0;
 for($i=1;$i<=14;$i++)
 {$flag=0;$flag2=0;
-    $res1=mysqli_query($conn,"SELECT station1 FROM inf WHERE id=$i");
-    $res2=mysqli_query($conn,"SELECT station2 FROM inf WHERE id=$i");
-    $sta1=$res1->fetch_assoc();
-    $sta2=$res2->fetch_assoc();
+ $res1=mysqli_query($conn,"SELECT station1 FROM inf WHERE id=$i");
+ $res2=mysqli_query($conn,"SELECT station2 FROM inf WHERE id=$i");
+ $sta1=$res1->fetch_assoc();
+ $sta2=$res2->fetch_assoc();
  $st1=$sta1["station1"];
  $st2=$sta2["station2"];
- echo $st1,$st2;
-    $res3=mysqli_query($conn,"select time from inf where id=$i");
-    $ti=$res3->fetch_assoc();
+ echo $st1,$st2;                                                             /* two satation got at particular id*/
+ $res3=mysqli_query($conn,"select time from inf where id=$i");
+ $ti=$res3->fetch_assoc();
  $time=$ti["time"];
  echo $time;
  echo "<br>";
@@ -68,7 +71,7 @@ for($i=1;$i<=14;$i++)
         $gr[$c][$pos2]=$time;
         $gr[$pos2][$c]=$time;
     }
-   else if($flag==1&&$flag2==0)
+    else if($flag==1&&$flag2==0)
     {
         $arr[++$c]=$st2;
         $gr[$c][$c]=0;
