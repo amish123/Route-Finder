@@ -1,7 +1,7 @@
 <?php
-$db_name="train_inf";
+$db_name="route";
 $mysql_username="root";
-$mysql_password="";
+$mysql_password="9936881349";
 $server_name="localhost";
 $conn=mysqli_connect($server_name,$mysql_username,$mysql_password,$db_name);
 if($conn)
@@ -105,7 +105,7 @@ for($i=1;$i<=$c;$i++)
     $tim[$i]=99999;
     $status[$i]=0;
 }
-
+$src=0;
 for($i=1;$i<=$c;$i++)
 {
     if($arr[$i]==$source)
