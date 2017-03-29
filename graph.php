@@ -42,8 +42,8 @@ for($i=1;$i<=14;$i++)
  $time=$ti["time"];
  echo $time;
  echo "<br>";
-    for($j=1;$j<=$c;$j++)
-    {
+    for($j=1;$j<=$c;$j++)         /* line(45-86) now we are checking if the station is present in arr , if not then isert into arr */  
+    {                                                                         
         if($arr[$j]==$st1)
         {
             $flag=1;
@@ -55,7 +55,7 @@ for($i=1;$i<=14;$i++)
             $pos2=$j;
         }
     }
-    if($flag==0&&$flag2==0)
+    if($flag==0&&$flag2==0)              /* here we are also updating adjacency matrix gr with the time b/w the two station */
     {
      $arr[++$c]=$st1;
      $arr[++$c]=$st2;
@@ -85,15 +85,19 @@ for($i=1;$i<=14;$i++)
     }
     
 }
-for($i=1;$i<=$c;$i++)
+
+for($i=1;$i<=$c;$i++)                            /* printing the adjacency matrix */
 {  for($j=1;$j<=$c;$j++)
         echo $gr[$i][$j];
 echo "<br>";
 }
-for($i=1;$i<=$c;$i++)
+
+for($i=1;$i<=$c;$i++)                   /*printing array arr which contains all the station */
     echo $arr[$i],"@";
 echo "<br>";
-$tim=array();
+
+
+$tim=array();                      /* from here dikstra is implemented */                             
 $status=array();
 $path=array();
 for($i=1;$i<=$c;$i++)
@@ -101,6 +105,7 @@ for($i=1;$i<=$c;$i++)
     $tim[$i]=99999;
     $status[$i]=0;
 }
+
 for($i=1;$i<=$c;$i++)
 {
     if($arr[$i]==$source)
@@ -132,19 +137,23 @@ for($i=1;$i<$c;$i++)
         }
     }
 }
-for($i=1;$i<=$c;$i++)
-        echo $tim[$i],"@";
+
+for($i=1;$i<=$c;$i++)                                /* printing the least time taken to go to stations from source */
+        echo $tim[$i],"@";                                
 echo "<br>";
-for($i=1;$i<=$c;$i++)
-        echo $path[$i],"@";
-for($i=1;$i<=$c;$i++)
+
+for($i=1;$i<=$c;$i++)                               /* printing the path before station of given station in least time path */
+        echo $path[$i],"@";                            
+
+for($i=1;$i<=$c;$i++)                               /* finding the destination station pos */
 {
     if($arr[$i]==$destination)
     {
         $pos=$i;
     }
 }
-echo "<br>";
+
+echo "<br>";                                       /* printing the least time consuming path from source and destination */
 echo $destination;
 while(true)
 {
