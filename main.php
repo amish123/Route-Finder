@@ -45,8 +45,10 @@
 
   <div class="footer">
     <div class="container">
-      <p>&copy; Amish&Nafees 2017</p>
+      <p>&copy; Amish&Nafis 2017</p>
     </div>
   </div>
+
+  
 </body>
 </html>
