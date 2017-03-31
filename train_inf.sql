@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2017 at 05:50 PM
--- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- Generation Time: Mar 31, 2017 at 11:40 PM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,20 +41,24 @@ CREATE TABLE `inf` (
 --
 
 INSERT INTO `inf` (`id`, `train_no`, `station1`, `station2`, `time`, `air_no`, `selector`) VALUES
-(1, '21', 'a', 'b', 8, NULL, 1),
-(2, '222', 'a', 'd', 5, 'ama', 2),
-(3, '342', 'a', 'c', 2, NULL, 1),
-(4, '123', 'b', 'd', 2, 'amam', 2),
-(5, '456', 'c', 'd', 2, NULL, 1),
-(6, '567', 'b', 'f', 13, 'aaaa', 2),
-(7, '987', 'f', 'd', 6, NULL, 1),
-(8, '127', 'f', 'g', 2, NULL, 1),
-(9, '767', 'f', 'h', 3, 'aaaaaaaa', 2),
-(10, '345', 'd', 'g', 3, NULL, 1),
-(11, '55', 'd', 'e', 1, NULL, 1),
-(12, '43', 'c', 'e', 5, 'sdasd', 2),
-(13, '444', 'e', 'g', 1, NULL, 1),
-(14, '567', 'g', 'h', 6, 'asdasd', 2);
+(1, '12417', 'allahabad', 'kanpur', 2, NULL, 1),
+(2, '12417', 'kanpur', 'delhi', 7, NULL, 1),
+(3, '12174', 'lucknow', 'kanpur', 2, NULL, 1),
+(4, '22419', 'lucknow', 'delhi', 8, NULL, 1),
+(5, '12561', 'varanasi', 'allahabad', 3, NULL, 1),
+(6, '12404', 'agra', 'allahabad', 7, NULL, 1),
+(7, '09809', 'kota', 'delhi', 7, NULL, 1),
+(8, '22631', 'kota', 'jaipur', 4, NULL, 1),
+(9, '12205', 'delhi', 'dehradun', 3, NULL, 1),
+(10, '12505', 'patna', 'allahabad', 6, NULL, 1),
+(11, NULL, 'guwahati', 'patna', 4, 'IndiGo', 2),
+(12, NULL, 'pune', 'bangalore', 2, 'GoAir', 2),
+(13, NULL, 'bangalore', 'varanasi', 3, 'IndiGo', 2),
+(14, NULL, 'bhopal', 'pune', 6, 'jetAirways', 2),
+(15, NULL, 'pune', 'lucknow', 4, 'IndiGo', 2),
+(16, NULL, 'london', 'delhi', 8, 'AirIndia', 2),
+(17, NULL, 'london', 'bombay', 9, 'AirIndia', 2),
+(18, NULL, 'varanasi', 'london', 14, 'AirIndia', 2);
 
 --
 -- Indexes for dumped tables
