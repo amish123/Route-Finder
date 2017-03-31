@@ -49,7 +49,6 @@
    left: 50%;
    transform: translate(-50%, -50%); 
    	box-shadow: 5px 5px 2.5px #000000 ;
-  	z-index: -1;
   	
 
   }
@@ -71,26 +70,12 @@
       font-family: "Trebuchet MS", Helvetica, sans-serif;
   }
 body{ 
-	background: linear-gradient( rgba(0, 0, 5, 0.5), rgba(0, 0, 0, 0.5) ), url(airplane-1024x640.jpg) no-repeat center center fixed; 
-	 -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+       background: url(http://s3.amazonaws.com/codecademy-content/projects/broadway/bg.png) no-repeat center center;
    background-size: cover;
-    z-index: -1;
+  height: 800px;
  
 }
  
- #background{
- 	background: url(airplane-1024x640.jpg) no-repeat center center fixed; 
- 	-webkit-filter: blur(10px);     
-    filter: blur(10px);
-      -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-   background-size: cover;
-    z-index: -1;
- }
-
 </style></head>
 
 
@@ -104,7 +89,7 @@ body{
      
         </header>
         <div class="form">
-        <form action="http://127.0.0.1/Route-Finder/graph.php" method="get">
+        <form action="http://127.0.0.1/Route-Finder/graph.php" method="get"> 
         <label for="s"><b>Source</b></label>
         <input type="text" id="s" name="source" list="station">
         <label for="d"><b>Destination</b></label>
