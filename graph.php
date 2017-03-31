@@ -1,23 +1,29 @@
+<!DOCTYPE html>
+<html>
+<link type="text/css" rel="stylesheet" href="style2.css"/>
+<body>
+    <h1>Following best path is found</h1>
 <?php
 $db_name="train_inf";
 $mysql_username="root";
 $mysql_password="";
 $server_name="localhost";
 $conn=mysqli_connect($server_name,$mysql_username,$mysql_password,$db_name);
-if($conn)
+/*if($conn)
 {
 	echo "connection sucess";
 }
 else
 {
 	echo "connection not established";
-}                                                                                        /* till now all was about connection */
-echo "<br>";
-
+}                                                                                       
+echo "<br>";*/                                                                            /* till now all was about connection */
 $source = strtolower($_GET["source"]);                                               
 $destination = strtolower($_GET["destination"]);                                    /* getting source and destination */
 $arr=array();                                                    /* arr contains all the unique station names */                       
-$gr=array();                                                    /* gr is 2d array ----adjacency matrix of graph */   
+$gr=array();                                                     /* gr is 2d array ----adjacency matrix of graph */   
+$mode=array();
+$medium=array();
 
 for($i=1;$i<=14;$i++)                                             
 {
@@ -36,12 +42,24 @@ for($i=1;$i<=14;$i++)
  $sta2=$res2->fetch_assoc();
  $st1=$sta1["station1"];
  $st2=$sta2["station2"];
- echo $st1,$st2;                                                             /* two satation got at particular id*/
+ /*echo $st1,$st2;*/                                                             /* two satation got at particular id*/
  $res3=mysqli_query($conn,"select time from inf where id=$i");
  $ti=$res3->fetch_assoc();
  $time=$ti["time"];
- echo $time;
- echo "<br>";
+ $res4=mysqli_query($conn,"select selector from inf where id=$i");
+ $sel=$res4->fetch_assoc();
+ $selector=$sel["selector"];
+ $res5=mysqli_query($conn,"SELECT train_no FROM inf WHERE id=$i");
+ $res6=mysqli_query($conn,"SELECT air_no FROM inf WHERE id=$i");
+ $med1=$res5->fetch_assoc();
+ $med2=$res6->fetch_assoc();
+ $media1=$med1["train_no"];
+ $media2=$med2["air_no"];
+ $res7=mysqli_query($conn,"SELECT selector FROM inf WHERE id=$i");
+ $sel=$res7->fetch_assoc();
+ $select=$sel["selector"];
+ /*echo $time."-".$selector;
+ echo "<br>";*/
     for($j=1;$j<=$c;$j++)         /* line(45-86) now we are checking if the station is present in arr , if not then isert into arr */  
     {                                                                         
         if($arr[$j]==$st1)
@@ -63,6 +81,17 @@ for($i=1;$i<=14;$i++)
      $gr[$c][$c]=0;
      $gr[$c][$c-1]=$time;
      $gr[$c-1][$c]=$time;
+     $mode[$c][$c-1]=$selector;
+     $mode[$c-1][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$c-1]=$media1;
+        $medium[$c-1][$c]=$media1;
+        }
+        else
+        {$medium[$c-1][$c]=$media2;
+            $medium[$c][$c-1]=$media2;
+        }
     }
     else if($flag==0&&$flag2==1)
     {
@@ -70,6 +99,18 @@ for($i=1;$i<=14;$i++)
         $gr[$c][$c]=0;
         $gr[$c][$pos2]=$time;
         $gr[$pos2][$c]=$time;
+        $mode[$c][$pos2]=$selector;
+        $mode[$pos2][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$pos2]=$media1;
+        $medium[$pos2][$c]=$media1;
+        }
+        else
+        {$medium[$pos2][$c]=$media2;
+            $medium[$c][$pos2]=$media2;
+        }
+        
     }
     else if($flag==1&&$flag2==0)
     {
@@ -77,24 +118,49 @@ for($i=1;$i<=14;$i++)
         $gr[$c][$c]=0;
         $gr[$c][$pos]=$time;
         $gr[$pos][$c]=$time;
+        $mode[$c][$pos]=$selector;
+        $mode[$pos][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$pos]=$media1;
+        $medium[$pos][$c]=$media1;
+        }
+        else
+        {$medium[$pos][$c]=$media2;
+            $medium[$c][$pos]=$media2;
+        }
     }
    else
-    {
+    {  
+       if($gr[$pos][$pos2]<$time)
+       {
        $gr[$pos][$pos2]=$time;
        $gr[$pos2][$pos]=$time;
+       $mode[$pos][$pos2]=$selector;
+       $mode[$pos2][$pos]=$selector;
+           if($select==1)
+        {
+        $medium[$pos][$pos2]=$media1;
+        $medium[$pos2][$pos]=$media1;
+        }
+        else
+        {$medium[$pos][$pos2]=$media2;
+            $medium[$pos2][$pos]=$media2;
+        }
+       }
     }
     
 }
-
-for($i=1;$i<=$c;$i++)                            /* printing the adjacency matrix */
+                                                 /* printing the adjacency matrix */
+/*for($i=1;$i<=$c;$i++)                            
 {  for($j=1;$j<=$c;$j++)
         echo $gr[$i][$j];
 echo "<br>";
-}
-
-for($i=1;$i<=$c;$i++)                   /*printing array arr which contains all the station */
+}*/
+                                                 /*printing array arr which contains all the station */
+/*for($i=1;$i<=$c;$i++)                   
     echo $arr[$i],"@";
-echo "<br>";
+echo "<br>";*/
 
 
 $tim=array();                      /* from here dikstra is implemented */                             
@@ -137,13 +203,13 @@ for($i=1;$i<$c;$i++)
         }
     }
 }
-
-for($i=1;$i<=$c;$i++)                                /* printing the least time taken to go to stations from source */
+                                                     /* printing the least time taken to go to stations from source */
+/*for($i=1;$i<=$c;$i++)                                
         echo $tim[$i],"@";                                
-echo "<br>";
-
-for($i=1;$i<=$c;$i++)                               /* printing the path before station of given station in least time path */
-        echo $path[$i],"@";                            
+echo "<br>";*/
+                                                     /* printing the path before station of given station in least time path */
+/*for($i=1;$i<=$c;$i++)                              
+        echo $path[$i],"@";*/                            
 
 for($i=1;$i<=$c;$i++)                               /* finding the destination station pos */
 {
@@ -152,16 +218,18 @@ for($i=1;$i<=$c;$i++)                               /* finding the destination s
         $pos=$i;
     }
 }
-
 echo "<br>";                                       /* printing the least time consuming path from source and destination */
-echo $destination;
+  
+    $real=array();
+    $count=0;
+    $real[$count]=$destination;
 while(true)
 {
     if($arr[$pos]==$source)
         break;
     else
     {
-        echo "<-",$path[$pos];
+        $real[++$count]=$path[$pos];
         for($i=1;$i<=$c;$i++)
             if($arr[$i]==$path[$pos])
             {
@@ -170,4 +238,37 @@ while(true)
             }
     }
 }
+    
+    for($i=$count;$i>=0;$i--)
+    {
+        echo "<font size=6>".($count-$i+1).".".$real[$i];
+        for($j=1;$j<=$c;$j++)
+        {
+            if($arr[$j]==$real[$i])
+            {if($i==$count)
+            {
+                $prev=$j;
+            }
+             else
+             {
+                 
+                 $next=$j;
+                     if($mode[$next][$prev]==1)
+                     {
+                         echo "<pre>    By Train(".$medium[$next][$prev].")</pre>";
+                     }
+                     else
+                     {
+                         echo "<pre>    By Aeroplane(".$medium[$next][$prev].")</pre>";
+                     }
+                 $prev=$j;
+             }
+                echo "<pre>    Time consumed till now in the journey:$tim[$j]hr</pre>";
+                break;
+            }
+        }
+        echo "<br>";
+    }
 ?>
+<body\>
+<html\>
