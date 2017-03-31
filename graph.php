@@ -24,13 +24,13 @@ $arr=array();                                                    /* arr contains
 $gr=array();                                                     /* gr is 2d array ----adjacency matrix of graph */   
 $mode=array();
 $medium=array();
-$res0=mysqli_query($conn,"SELECT max(id) FROM inf");
+$res0=mysqli_query($conn,"SELECT count(id) FROM inf");
 $i0=$res0->fetch_assoc();
-$id=$i0["max(id)"];
+$id=$i0["count(id)"];  //count is more better than max()
 
 for($i=1;$i<=$id;$i++)                                             
 {
-    for($j=1;$j<=14;$j++)
+    for($j=1;$j<=$id;$j++)
     {
         $gr[$i][$j]=0;                                    /* initialising all values to 0 in gr matrix meaning no path */
     }
