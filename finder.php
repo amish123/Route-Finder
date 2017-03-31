@@ -24,7 +24,6 @@
    
 }
  
-
   .footer{
   	margin-top: 500px;
   	
@@ -36,7 +35,6 @@
      font-family: "Trebuchet MS", Helvetica, sans-serif;
      
   }
-
   .form{
   	width: 40%;
   	height:40%;
@@ -51,9 +49,7 @@
    	box-shadow: 5px 5px 2.5px #000000 ;
   	z-index: -1;
   	
-
   }
-
  input[type=text], select {
     width: 100%;
     padding: 12px 20px;
@@ -63,7 +59,6 @@
     border-radius: 4px;
     box-sizing: border-box;
 }
-
   label{
       margin-top: 10px;
       margin-bottom: 10px;
@@ -90,7 +85,6 @@ body{
    background-size: cover;
     z-index: -1;
  }
-
 </style></head>
 
 
@@ -116,7 +110,7 @@ body{
         	<option value="Varansi"></option>
         	<option value="Lucknow"></option>
         	<option value="Patna"></option>
-        	<option value="Mumbai"></option>
+        <option value="Mumbai"></option>
           <option value="Agra"></option>
           <option value="Pune"></option>
           <option value="Guwahati"></option>
