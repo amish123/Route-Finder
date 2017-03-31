@@ -98,7 +98,7 @@ body{
      
         </header>
         <div class="form">
-        <form action="graph.php" method="get">
+        <form action="http://127.0.0.1/Route-Finder/graph.php" method="get">
         <label for="s"><b>Source</b></label>
         <input type="text" id="s" name="source" list="station">
         <label for="d"><b>Destination</b></label>

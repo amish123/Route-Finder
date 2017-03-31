@@ -4,9 +4,9 @@
 <body>
     <h1>Following best path is found</h1>
 <?php
-$db_name="route";
+$db_name="train_inf";
 $mysql_username="root";
-$mysql_password="9936881349";
+$mysql_password="";
 $server_name="localhost";
 $conn=mysqli_connect($server_name,$mysql_username,$mysql_password,$db_name);
 /*if($conn)
@@ -42,7 +42,7 @@ for($i=1;$i<=14;$i++)
  $sta2=$res2->fetch_assoc();
  $st1=$sta1["station1"];
  $st2=$sta2["station2"];
- /*echo $st1,$st2;*/                                                             /* two satation got at particular id*/
+ //echo "<pre>".$st1."<br><p>next</p>".$st2."</pre";                                                          /* two satation got at particular id*/
  $res3=mysqli_query($conn,"select time from inf where id=$i");
  $ti=$res3->fetch_assoc();
  $time=$ti["time"];
@@ -163,7 +163,7 @@ echo "<br>";
 echo "<br>";*/
 
 
-$tim=array();                      /* from here dikstra is implemented */                             
+$tim=array();                      /* from here dijkstra is implemented */                             
 $status=array();
 $path=array();
 for($i=1;$i<=$c;$i++)
