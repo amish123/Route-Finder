@@ -24,8 +24,11 @@ $arr=array();                                                    /* arr contains
 $gr=array();                                                     /* gr is 2d array ----adjacency matrix of graph */   
 $mode=array();
 $medium=array();
+$res0=mysqli_query($conn,"SELECT max(id) FROM inf");
+$i0=$res0->fetch_assoc();
+$id=$i0["max(id)"];
 
-for($i=1;$i<=14;$i++)                                             
+for($i=1;$i<=$id;$i++)                                             
 {
     for($j=1;$j<=14;$j++)
     {
@@ -34,7 +37,7 @@ for($i=1;$i<=14;$i++)
 }
 
 $c=0;
-for($i=1;$i<=14;$i++)
+for($i=1;$i<=$id;$i++)
 {$flag=0;$flag2=0;
  $res1=mysqli_query($conn,"SELECT station1 FROM inf WHERE id=$i");
  $res2=mysqli_query($conn,"SELECT station2 FROM inf WHERE id=$i");
