@@ -24,13 +24,13 @@ $arr=array();                                                    /* arr contains
 $gr=array();                                                     /* gr is 2d array ----adjacency matrix of graph */   
 $mode=array();
 $medium=array();
-$res0=mysqli_query($conn,"SELECT max(id) FROM inf");
+$res0=mysqli_query($conn,"SELECT count(id) FROM inf");
 $i0=$res0->fetch_assoc();
-$id=$i0["max(id)"];
+$id=$i0["count(id)"];  //count is more better than max()
 
 for($i=1;$i<=$id;$i++)                                             
 {
-    for($j=1;$j<=14;$j++)
+    for($j=1;$j<=$id;$j++)
     {
         $gr[$i][$j]=0;                                    /* initialising all values to 0 in gr matrix meaning no path */
     }
@@ -45,7 +45,7 @@ for($i=1;$i<=$id;$i++)
  $sta2=$res2->fetch_assoc();
  $st1=$sta1["station1"];
  $st2=$sta2["station2"];
- /*echo $st1,$st2;*/                                                             /* two satation got at particular id*/
+ //echo "<pre>".$st1."<br><p>next</p>".$st2."</pre";                                                          /* two satation got at particular id*/
  $res3=mysqli_query($conn,"select time from inf where id=$i");
  $ti=$res3->fetch_assoc();
  $time=$ti["time"];
@@ -166,7 +166,7 @@ echo "<br>";
 echo "<br>";*/
 
 
-$tim=array();                      /* from here dikstra is implemented */                             
+$tim=array();                      /* from here dijkstra is implemented */                             
 $status=array();
 $path=array();
 for($i=1;$i<=$c;$i++)
@@ -174,7 +174,7 @@ for($i=1;$i<=$c;$i++)
     $tim[$i]=99999;
     $status[$i]=0;
 }
-
+$src=0;
 for($i=1;$i<=$c;$i++)
 {
     if($arr[$i]==$source)
