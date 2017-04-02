@@ -65,17 +65,25 @@
       color: #ffffff;
       font-family: "Trebuchet MS", Helvetica, sans-serif;
   }
-body{ 
- background: url(bg.png) no-repeat center center;
-  background-size: cover;
-  height: 800px;
+body{
+  background: linear-gradient( rgba(0, 0, 5, 0.5), rgba(0, 0, 0, 0.5) ), url(airplane-1024x640.jpg) no-repeat center center fixed; 
+   -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+   background-size: cover;
+    z-index: -1;
  
 }
  
  #background{
- background: url(bg.png) no-repeat center center;
-  background-size: cover;
-  height: 800px;
+  background: url(airplane-1024x640.jpg) no-repeat center center fixed; 
+  -webkit-filter: blur(10px);     
+    filter: blur(10px);
+      -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+   background-size: cover;
+    z-index: -1;
  }
 </style></head>
 
