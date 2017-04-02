@@ -22,21 +22,21 @@
         <img src="https://s3.amazonaws.com/codecademy-content/projects/broadway/design.svg">
         <h2>About</h2>
         <p>Know more about this project.</p>
-        <a class="btn-default" href="#">Click</a>
+        <a class="btn-default" href="about.html">Click</a>
       </div>
 
       <div class="col">
         <img src="https://s3.amazonaws.com/codecademy-content/projects/broadway/develop.svg">
         <h2>Developers</h2>
         <p>Meet the developers.</p>
-        <a class="btn-default" href="#">Click</a>
+        <a class="btn-default" href="developer.html">Click</a>
       </div>
 
       <div class="col">
         <img src="https://s3.amazonaws.com/codecademy-content/projects/broadway/deploy.svg">
         <h2>Upload data</h2>
         <p>Upload the information that we don't know.</p>
-        <a class="btn-default" href="#">Click</a>
+        <a class="btn-default" href="uploadforms.html">Click</a>
       </div>
 
     </div>
