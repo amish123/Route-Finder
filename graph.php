@@ -266,7 +266,7 @@ while(true)
                      }
                  $prev=$j;
              }
-                echo "<pre>    Time consumed till now in the journey:$tim[$j]hr</pre>";
+                echo "<pre>    Time consumed till now in the journey:$tim[$j]hr(Waiting Time not Included)</pre>";
                 break;
             }
         }

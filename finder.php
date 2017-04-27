@@ -1,6 +1,156 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)file:///C:/xampp/htdocs/myphpfile/RoutFinder.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<html><?php
+$db_name="train_inf";
+$mysql_username="root";
+$mysql_password="";
+$server_name="localhost";
+$conn=mysqli_connect($server_name,$mysql_username,$mysql_password,$db_name);
+/*if($conn)
+{
+	echo "connection sucess";
+}
+else
+{
+	echo "connection not established";
+}                                                                                       
+echo "<br>";*/                                                                            /* till now all was about connection */                                    /* getting source and destination */
+$arr=array();                                                    /* arr contains all the unique station names */                       
+$gr=array();                                                     /* gr is 2d array ----adjacency matrix of graph */   
+$mode=array();
+$medium=array();
+$res0=mysqli_query($conn,"SELECT count(id) FROM inf");
+$i0=$res0->fetch_assoc();
+$id=$i0["count(id)"];  //count is more better than max()
+
+for($i=1;$i<=$id;$i++)                                             
+{
+    for($j=1;$j<=$id;$j++)
+    {
+        $gr[$i][$j]=0;                                    /* initialising all values to 0 in gr matrix meaning no path */
+    }
+}
+
+$c=0;
+for($i=1;$i<=$id;$i++)
+{$flag=0;$flag2=0;
+ $res1=mysqli_query($conn,"SELECT station1 FROM inf WHERE id=$i");
+ $res2=mysqli_query($conn,"SELECT station2 FROM inf WHERE id=$i");
+ $sta1=$res1->fetch_assoc();
+ $sta2=$res2->fetch_assoc();
+ $st1=$sta1["station1"];
+ $st2=$sta2["station2"];
+ //echo "<pre>".$st1."<br><p>next</p>".$st2."</pre";                                                          /* two satation got at particular id*/
+ $res3=mysqli_query($conn,"select time from inf where id=$i");
+ $ti=$res3->fetch_assoc();
+ $time=$ti["time"];
+ $res4=mysqli_query($conn,"select selector from inf where id=$i");
+ $sel=$res4->fetch_assoc();
+ $selector=$sel["selector"];
+ $res5=mysqli_query($conn,"SELECT train_no FROM inf WHERE id=$i");
+ $res6=mysqli_query($conn,"SELECT air_no FROM inf WHERE id=$i");
+ $med1=$res5->fetch_assoc();
+ $med2=$res6->fetch_assoc();
+ $media1=$med1["train_no"];
+ $media2=$med2["air_no"];
+ $res7=mysqli_query($conn,"SELECT selector FROM inf WHERE id=$i");
+ $sel=$res7->fetch_assoc();
+ $select=$sel["selector"];
+ /*echo $time."-".$selector;
+ echo "<br>";*/
+    for($j=1;$j<=$c;$j++)         /* line(45-86) now we are checking if the station is present in arr , if not then isert into arr */  
+    {                                                                         
+        if($arr[$j]==$st1)
+        {
+            $flag=1;
+            $pos=$j;
+        }
+        if($arr[$j]==$st2)
+        {
+            $flag2=1;
+            $pos2=$j;
+        }
+    }
+    if($flag==0&&$flag2==0)              /* here we are also updating adjacency matrix gr with the time b/w the two station */
+    {
+     $arr[++$c]=$st1;
+     $arr[++$c]=$st2;
+     $gr[$c-1][$c-1]=0;
+     $gr[$c][$c]=0;
+     $gr[$c][$c-1]=$time;
+     $gr[$c-1][$c]=$time;
+     $mode[$c][$c-1]=$selector;
+     $mode[$c-1][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$c-1]=$media1;
+        $medium[$c-1][$c]=$media1;
+        }
+        else
+        {$medium[$c-1][$c]=$media2;
+            $medium[$c][$c-1]=$media2;
+        }
+    }
+    else if($flag==0&&$flag2==1)
+    {
+        $arr[++$c]=$st1;
+        $gr[$c][$c]=0;
+        $gr[$c][$pos2]=$time;
+        $gr[$pos2][$c]=$time;
+        $mode[$c][$pos2]=$selector;
+        $mode[$pos2][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$pos2]=$media1;
+        $medium[$pos2][$c]=$media1;
+        }
+        else
+        {$medium[$pos2][$c]=$media2;
+            $medium[$c][$pos2]=$media2;
+        }
+        
+    }
+    else if($flag==1&&$flag2==0)
+    {
+        $arr[++$c]=$st2;
+        $gr[$c][$c]=0;
+        $gr[$c][$pos]=$time;
+        $gr[$pos][$c]=$time;
+        $mode[$c][$pos]=$selector;
+        $mode[$pos][$c]=$selector;
+        if($select==1)
+        {
+        $medium[$c][$pos]=$media1;
+        $medium[$pos][$c]=$media1;
+        }
+        else
+        {$medium[$pos][$c]=$media2;
+            $medium[$c][$pos]=$media2;
+        }
+    }
+   else
+    {  
+       if($gr[$pos][$pos2]<$time)
+       {
+       $gr[$pos][$pos2]=$time;
+       $gr[$pos2][$pos]=$time;
+       $mode[$pos][$pos2]=$selector;
+       $mode[$pos2][$pos]=$selector;
+           if($select==1)
+        {
+        $medium[$pos][$pos2]=$media1;
+        $medium[$pos2][$pos]=$media1;
+        }
+        else
+        {$medium[$pos][$pos2]=$media2;
+            $medium[$pos2][$pos]=$media2;
+        }
+       }
+    }
+    
+}?>
+    
+    <head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
   <title>Route Finder</title>
 <style type="text/css">
     h1{
@@ -100,33 +250,24 @@ body{
         <div class="form">
         <form action="http://127.0.0.1/Route-Finder/graph.php" method="get">
         <label for="s"><b>Source</b></label>
-        <input type="text" id="s" name="source" list="station">
+        <select id="s" name="source" >
+            <?php
+for ($i=1;$i<=$c;$i++){
+?>
+<option value="<?=$arr[$i];?>"><?=$arr[$i];?></option>
+<?php
+}
+            ?></select>
         <label for="d"><b>Destination</b></label>
-        <input type="text" id="d" name="destination" list="station"> 
+        <select id="d" name="destination" > 
+               <?php
+for ($i=1;$i<=$c;$i++){
+?>
+<option value="<?=$arr[$i];?>"><?=$arr[$i];?></option>
+<?php
+                      }?></select>
         <input type="Submit" name="Submit" value="Get Route">
-        <datalist id="station">
-          <option value="Allahabad"></option>
-          <option value="Delhi"></option>
-          <option value="Varansi"></option>
-          <option value="Lucknow"></option>
-          <option value="Patna"></option>
-        <option value="Mumbai"></option>
-          <option value="Agra"></option>
-          <option value="Pune"></option>
-          <option value="Guwahati"></option>
-          <option value="Dehradun"></option>
-          <option value="New York"></option>
-          <option value="Kanpur"></option>
-          <option value="Jaipur"></option>
-          <option value="Kota"></option>
-          <option value="Bangalore"></option>
-          <option value="Chandigarh"></option>
-          <option value="Guwahati"></option>
-          <option value="Bhopal"></option>
-          <option value="London"></option>
-          <option value="Kolkata"></option>
         
-        </datalist>
        </form></div>
       <footer>
 
